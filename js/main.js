@@ -8,7 +8,7 @@ let app = new Vue({
        description: "A pair of warm, fuzzy socks", // 1 практическая
        altText: "A pair of socks",
        link: "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks", // 2 практическая
-       inStock: true,
+       inStock: false,
        inventory: 100,
        onSale: true, // 3 практическая 
        details: ['80% cotton', '20% polyester', 'Gender-neutral'],
