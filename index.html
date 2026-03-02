@@ -28,6 +28,16 @@
            <a v-bind:href="link">More products like this</a>
            <span v-show="onSale">On Sale</span>
            <span v-show="!onSale">Not Sale</span>
+           <ul>
+               <li v-for="detail in details">{{ detail }}</li>
+            </ul>
+            <div v-for="variant in variants" :key="variant.variantId">
+                <p>{{ variant.variantColor }}</p>
+            </div>
+            <p> Sizes: </p>
+            <ul>
+               <li v-for="size in sizes">{{ size }}</li> <!-- 4 практическая -->
+            </ul>
        </div>
 
    </div>

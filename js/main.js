@@ -1,6 +1,5 @@
-let inStock = true;
-let inventory = 100;
-let onSale = true;
+
+let details =  ['80% cotton', '20% polyester', 'Gender-neutral'];
 
 let app = new Vue({
    el: '#app',
@@ -13,5 +12,18 @@ let app = new Vue({
        inStock: true,
        inventory: 100,
        onSale: true, // 3 практическая 
+       details: ['80% cotton', '20% polyester', 'Gender-neutral'],
+       sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+       variants: [
+       {
+         variantId: 2234,
+            variantColor: 'green'
+       },
+      {
+          variantId: 2235,
+          variantColor: 'blue'
+     }
+     ],
+
    }
 })
