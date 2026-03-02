@@ -14,31 +14,30 @@
 <div id="app">
 
    <div class="product">
-
        <div class="product-image">
            <img v-bind:src="image" v-bind:alt="altText" />
        </div>
 
        <div class="product-info">
-           <h1>{{ product }}</h1>
+           <h1>{{ title }}</h1>
            <p> {{description}}</p>
            <p v-if="inventory > 10">In stock</p>
            <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
            <p v-else>Out of stock</p>
            <a v-bind:href="link">More products like this</a>
+           <p> {{ sale }}</p>
            <span v-show="onSale">On Sale</span>
            <span v-show="!onSale">Not Sale</span>
            <ul>
                <li v-for="detail in details">{{ detail }}</li>
             </ul>
             <div
-                class="color-box"
-                v-for="variant in variants"
-                :key="variant.variantId"
-                :style="{ backgroundColor:variant.variantColor }"
-                @mouseover="updateProduct(variant.variantImage)"
-            >
-            </div>
+            class="color-box"
+            v-for="(variant, index) in variants"
+            :key="variant.variantId"
+            :style="{ backgroundColor:variant.variantColor }"
+            @mouseover="updateProduct(index)"
+        ></div>
             <p> Sizes: </p>
             <ul>
                <li v-for="size in sizes">{{ size }}</li> <!-- 4 практическая -->
@@ -51,7 +50,7 @@
                 :style="{ textDecoration: 'line-through' }"
             > 
                 Out of Stock 
-            </p>
+            </p><!-- 6 практическая -->
              <button
                 v-on:click="addToCart"
                 :disabled="!inStock"
