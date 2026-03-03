@@ -46,9 +46,6 @@ Vue.component('product', {
                 <ul>
                     <li v-for="size in sizes">{{ size }}</li> <!-- 4 практическая -->
                 </ul>
-                <div class="cart">
-                    <p>Cart({{ cart }})</p>
-                </div>
                 <p 
                     v-if="!inStock"
                     :style="{ textDecoration: 'line-through' }"
@@ -79,7 +76,6 @@ Vue.component('product', {
             onSale: false, // 3 практическая 
             details: ['80% cotton', '20% polyester', 'Gender-neutral'],
             sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-            cart: 0,
 
             variants: [
                 {
@@ -99,10 +95,13 @@ Vue.component('product', {
     },
     methods: {
         addToCart() {
-            this.cart += 1
+            this.$emit('add-to-cart',
+            this.variants[this.selectedVariant].variantId);
         },
+
         DeleteToCart() {
-            this.cart -= 1 // 5 практическая
+            this.$emit('delete-to-cart',
+            this.variants[this.selectedVariant].variantId);
         },
         updateProduct(index) {
             this.selectedVariant = index;
@@ -138,8 +137,21 @@ Vue.component('product', {
 });
 
 new Vue({
-    el: '#app',
-    data: {
-        premium: true
+   el: '#app',
+   data: {
+       premium: true,
+       cart: []
+   },
+   methods: {
+        updateCart(id) {
+            this.cart.push(id);
+        },
+        DeleteToCart(id) { // 9 практическая 
+            let index = this.cart.indexOf(id)
+            if (index > -1) {
+                this.cart.splice(index, 1)
+            }
+        }
     }
+
 });
