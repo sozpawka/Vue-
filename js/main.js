@@ -40,7 +40,6 @@ Vue.component('product-tabs', {
             </li>
           </ul>
         </div>
-
         <div v-show="selectedTab === 'Make a Review'"> 
          <product-review></product-review>
         </div>
@@ -180,6 +179,8 @@ Vue.component('product', {
                 <ul>
                     <li v-for="size in sizes">{{ size }}</li> <!-- 4 практическая -->
                 </ul>
+                <p>Positive reviews: {{ positiveReviews }}</p>
+                <p>Negative reviews: {{ negativeReviews }}</p>
                 <p 
                     v-if="!inStock"
                     :style="{ textDecoration: 'line-through' }"
@@ -197,18 +198,6 @@ Vue.component('product', {
                 <button @click="deleteFromCart">
                     Delete to cart
                 </button>
-                <div>
-                    <h2>Reviews</h2>
-                    <p v-if="!reviews.length">There are no reviews yet.</p>
-                    <ul>
-                        <li v-for="review in reviews">
-                            <p>{{ review.name }}</p>
-                            <p>Rating: {{ review.rating }}</p>
-                            <p>{{ review.review }}</p>
-                            <p>Recommend: {{ review.recommend }}</p> 
-                        </li>
-                    </ul>
-                </div>
                 <product-tabs :reviews="reviews"  :shipping="shipping" :details="details"></product-tabs>
             </div>
         </div>
@@ -278,6 +267,12 @@ Vue.component('product', {
             } else {
                 return this.brand + ' ' + this.product + ' not sale'
             }
+        },
+        positiveReviews() {
+            return this.reviews.filter(review => review.recommend === "Yes").length
+        },
+        negativeReviews() {
+            return this.reviews.filter(review => review.recommend === "No").length
         },
         shipping() {
             if (this.premium) {
