@@ -16,7 +16,10 @@
        <p>Cart({{ cart.length }})</p>
    </div>
 
-   <product :premium="premium" @add-to-cart="updateCart" @delete-to-cart = "DeleteToCart"></product>
+   <product :premium="premium" :order-completed="orderCompleted" @add-to-cart="updateCart" @delete-to-cart = "DeleteToCart"></product>
+   <button @click="completeOrder">
+      Complete order
+   </button>
 </div>
 </body>
 </html>

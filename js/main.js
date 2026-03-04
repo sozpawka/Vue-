@@ -1,5 +1,25 @@
 let eventBus = new Vue();
+Vue.component('bonus-product', {
+    props: ['available'],
+    template: `
+      <div class="bonus-product">
+        <h2>Bonus product</h2>
+        <p v-if="available">Order available</p>
+        <p v-else style="color: red;">
+          Available after socks order
+        </p>
 
+        <button :disabled="!available" @click="orderBonus">
+          Order bonus product
+        </button>
+      </div>
+    `,
+    methods: {
+        orderBonus() {
+            this.$emit('order-bonus')
+        }
+    }
+});
 Vue.component('product-tabs', {
     props: {
         reviews: {
@@ -150,6 +170,10 @@ Vue.component('product', {
            type: Boolean,
            required: true
        },
+        orderCompleted: {
+            type: Boolean,
+            required: true
+        },
    },
     template: `
         <div class="product">
@@ -167,6 +191,7 @@ Vue.component('product', {
                 <span v-show="onSale">On Sale</span>
                 <span v-show="!onSale">Not Sale</span>
                 <product-details :details="details"></product-details>
+                <bonus-product :available="orderCompleted" @order-bonus="handleBonusOrder"></bonus-product>
                 <p>Shipping: {{ shipping }}</p>
                 <div
                     class="color-box"
@@ -245,6 +270,9 @@ Vue.component('product', {
         updateProduct(index) {
             this.selectedVariant = index;
         },
+        handleBonusOrder() {
+            alert('Bonus product ordered')
+        },
     },
     mounted() {
         eventBus.$on('review-submitted', productReview => {
@@ -288,7 +316,8 @@ new Vue({
    el: '#app',
    data: {
        premium: true,
-       cart: []
+       cart: [],
+       orderCompleted: false,
    },
    methods: {
         updateCart(id) {
@@ -299,6 +328,15 @@ new Vue({
             if (index > -1) {
                 this.cart.splice(index, 1)
             }
+        },
+        completeOrder() {
+        if (this.cart.length > 0) {
+            this.orderCompleted = true
+            this.cart = []
+            alert("Order complet")
+        } else {
+            alert("Cart empty")
         }
+}
     }
 });
